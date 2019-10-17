@@ -1,0 +1,71 @@
+
+    public void purchase(String model) throws IOException {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).model.equals(model)) { // проверка модели на складе
+                getterSelectedModel = list.get(i).model;
+                getterModelEquals = true;
+                getterPosI = i;  // позиция в листе
+                if (list.get(i).color.equals(info.setColor())) { // проверка цвета, если модель совпала, на складе
+                    getterColor = list.get(i).color;
+                    getterColorEquals = true;
+                } else {
+                    System.out.println("У нас нет такой расцветки, как " + list.get(i).color + " у телефона " + list.get(i).model + ".\nПопробуйте другую расцветку.\n");
+                    getterColorEquals = false;
+                    purchase(getterSelectedModel);
+                }
+            } else {
+                System.out.println("Нет такого телефона в нашем магазине, попробуйте другой товар.");
+                purchase(info.setModel());
+            }
+        }
+        if (getterModelEquals) { // проверка модели
+            if (getterColorEquals) { // проверка цвета
+
+                for (int i = 0; i < cart.size(); i++) {
+                    if (cart.get(i).model.equals(model)) { // проверка модели на складе
+                        getterSelectedModel = cart.get(i).model;
+                        getterModelEquals = true;
+                        getterPosI = i;  // позиция в CART
+                        if (cart.get(i).color.equals(getterColor)) { // проверка цвета, если модель совпала, на складе
+                            getterColor = cart.get(i).color;
+                            getterColorEquals = true;
+                        } else {
+                            getterColorEquals = false;
+                        }
+                    }
+                }
+                if (getterModelEquals) { // проверка модели
+                    if (getterColorEquals) { // проверка цвета
+                        System.out.println("На складе в данный момент телефон " + list.get(getterPosI).model + " с цветом " + list.get(getterPosI).color + " в количестве:" + list.get(getterPosI).count + "\nКакое кол-во телефонов добавить в заказ?");
+                        getterCount = info.setCount();
+                        cart.get(getterPosI).addCount(getterCount);
+                        list.get(getterPosI).removeCount(getterCount);
+                        allPrice = allPrice + getterCount * list.get(getterPosI).price;
+
+                    }
+                    System.out.println("На складе в данный момент телефон " + list.get(getterPosI).model + " с цветом " + list.get(getterPosI).color + " в количестве:" + list.get(getterPosI).count + "\nКакое кол-во телефонов добавить в заказ?");
+                    getterCount = info.setCount();
+                    cart.get(getterPosI).addCount(getterCount);
+                    list.get(getterPosI).removeCount(getterCount);
+                    allPrice = allPrice + getterCount * list.get(getterPosI).price;
+                    cart.add(list.get(getterPosI));
+                }
+                System.out.println("На складе в данный момент телефон " + list.get(getterPosI).model + " с цветом " + list.get(getterPosI).color + " в количестве:" + list.get(getterPosI).count + "\nКакое кол-во телефонов добавить в заказ?");
+                getterCount = info.setCount();
+                cart.get(getterPosI).addCount(getterCount);
+                list.get(getterPosI).removeCount(getterCount);
+                allPrice = allPrice + getterCount * list.get(getterPosI).price;
+                cart.add(list.get(getterPosI));
+            }
+
+        }
+
+
+        System.out.println("Вы хотите продолжить покупки? [Y|N]");
+        again = scan.readLine().toLowerCase();
+        if (again == "y" || again == "yes") {
+            purchase(info.setModel());
+        } else if (again == "n" || again == "no") {
+            breaker();
+        }
+    }
