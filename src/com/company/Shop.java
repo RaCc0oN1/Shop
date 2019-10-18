@@ -124,13 +124,13 @@ public class Shop {
         }
 
 
-        System.out.println("Вы хотите продолжить покупки? [Y|N]");
+/*        System.out.println("Вы хотите продолжить покупки? [Y|N]");
         again = scan.readLine().toLowerCase();
         if (again == "y" || again == "yes") {
             purchase(info.setModel());
         } else if (again == "n" || again == "no") {
             breaker();
-        }
+        }*/
     }
 
     public void printerBuyScore() {
